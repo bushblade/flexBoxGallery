@@ -2,6 +2,8 @@ const flexContainer = document.querySelector('.flex-container'),
   modal = document.querySelector('.my-modal'),
   modalContent = document.querySelector('.my-modal-content')
 
+let images
+
 async function getImages() {
   const response = await fetch('images.json')
   const data = await response.json()
@@ -10,16 +12,18 @@ async function getImages() {
 
 getImages().then(i => {
   i.forEach(x => flexContainer.innerHTML += `<img src="${x}" alt="" />`)
-  let images = Array.from(document.querySelectorAll('img'))
+  images = Array.from(document.querySelectorAll('img'))
   images.forEach(x => x.addEventListener('click', modalToggle))
-  modal.addEventListener('click', x => {
-    if (x.target.classList.contains('my-modal-content')) {
-      modal.style.display = 'none'
-      document.body.style.overflow = ''
-    }
-  })
 })
 
+modal.addEventListener('click', x => x.target.classList.contains('my-modal-content') ? closeModal() : false)
+
+document.addEventListener('keydown', e => e.keyCode === 27 ? closeModal() : false)
+
+function closeModal() {
+  modal.style.display = 'none'
+  document.body.style.overflow = ''
+}
 
 function modalToggle(e) {
   let windowHeight = window.innerHeight
