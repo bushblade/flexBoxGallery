@@ -18,7 +18,33 @@ getImages().then(i => {
 
 modal.addEventListener('click', x => x.target.classList.contains('my-modal-content') ? closeModal() : false)
 
-document.addEventListener('keydown', e => e.keyCode === 27 ? closeModal() : false)
+document.addEventListener('keydown', e => {
+  if (modal.style.display === 'block') {
+    e.keyCode === 27 ? closeModal() : false
+    //left is 37
+    e.keyCode === 37 ? prevImg() : false
+    //right is 39
+    e.keyCode === 39 ? nextImg() : false
+  }
+})
+
+function nextImg() {
+  let modalImage = document.getElementById('modal-image')
+  let currentIndx = images.reduce((n, x, i) => {
+    x.src === modalImage.src ? n = i : false
+    return n === images.length - 1 ? -1 : n
+  }, 0)
+  modalImage.src = images[currentIndx + 1].src
+}
+
+function prevImg() {
+  let modalImage = document.getElementById('modal-image')
+  let currentIndx = images.reduce((n, x, i) => {
+    x.src === modalImage.src ? n = i : false
+    return n === 0 ? images.length - 1 : n
+  }, 0)
+  modalImage.src = images[currentIndx - 1].src
+}
 
 function closeModal() {
   modal.style.display = 'none'
