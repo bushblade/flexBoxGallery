@@ -1,7 +1,6 @@
 const flexContainer = document.querySelector('.flex-container'),
   modal = document.querySelector('.my-modal'),
-  modalContent = document.querySelector('.my-modal-content')
-  
+  modalContent = document.querySelector('.my-modal-content')  
 
 let images
 
@@ -12,13 +11,14 @@ async function getImages() {
 }
 
 getImages().then(i => {
+  images = i
   i.forEach(x => flexContainer.innerHTML += `<img src="${x}" alt="" />`)
-  images = Array.from(document.querySelectorAll('img'))
-  images.forEach(x => x.addEventListener('click', modalToggle))
+  Array.from(document.querySelectorAll('img')).forEach(x => x.addEventListener('click', modalToggle))
 })
 
 modal.addEventListener('click', x => x.target.classList.contains('my-modal-content') ? closeModal() : false)
-
+document.getElementById('next').addEventListener('click', () => changeImg(+1))
+document.getElementById('prev').addEventListener('click', () => changeImg(-1))
 document.addEventListener('keydown', e => {
   if (modal.style.display === 'block') {
     e.keyCode === 27 ? closeModal() : false
@@ -27,25 +27,17 @@ document.addEventListener('keydown', e => {
   }
 })
 
-document.getElementById('next').addEventListener('click', nextImg)
-document.getElementById('prev').addEventListener('click', prevImg)
 
-function nextImg() {
+function changeImg (val){
   let modalImage = document.getElementById('modal-image')
-  let currentIndx = images.reduce((n, x, i) => {
-    x.src === modalImage.src ? n = i : false
-    return n === images.length - 1 ? -1 : n
-  }, 0)
-  modalImage.src = images[currentIndx + 1].src
-}
-
-function prevImg() {
-  let modalImage = document.getElementById('modal-image')
-  let currentIndx = images.reduce((n, x, i) => {
-    x.src === modalImage.src ? n = i : false
-    return n === 0 ? images.length - 1 : n
-  }, 0)
-  modalImage.src = images[currentIndx - 1].src
+  let currentIndx = images.indexOf(modalImage.src)
+  if (currentIndx === 0 && val === -1){
+    modalImage.src = images[images.length - 1]  
+  } else if(currentIndx === images.length -1 && val === +1){
+    modalImage.src = images[0]
+  } else {
+    modalImage.src = images[currentIndx + val]
+  }
 }
 
 function closeModal() {
@@ -54,7 +46,6 @@ function closeModal() {
 }
 
 function modalToggle(e) {
-  let windowHeight = window.innerHeight
   modal.style.display = 'block'
   modalContent.innerHTML = `<img src="${e.target.src}" id="modal-image">`
   document.body.style.overflow = 'hidden'
