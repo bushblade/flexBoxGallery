@@ -70,3 +70,10 @@ html {
 #prev:hover {
   color: #a8aaaab0;
 }
+
+.animated {
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}

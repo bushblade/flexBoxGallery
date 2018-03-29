@@ -1,6 +1,6 @@
 const flexContainer = document.querySelector('.flex-container'),
   modal = document.querySelector('.my-modal'),
-  modalContent = document.querySelector('.my-modal-content')  
+  modalContent = document.querySelector('.my-modal-content')
 
 let images
 
@@ -28,25 +28,36 @@ document.addEventListener('keydown', e => {
 })
 
 
-function changeImg (val){
+function changeImg(val) {
   let modalImage = document.getElementById('modal-image')
   let currentIndx = images.indexOf(modalImage.src)
-  if (currentIndx === 0 && val === -1){
-    modalImage.src = images[images.length - 1]  
-  } else if(currentIndx === images.length -1 && val === +1){
+  if (currentIndx === 0 && val === -1) {
+    modalImage.src = images[images.length - 1]
+  } else if (currentIndx === images.length - 1 && val === +1) {
     modalImage.src = images[0]
   } else {
-    modalImage.src = images[currentIndx + val]
+    modalImage.classList.add('animated', 'fadeOut')
+    setTimeout(() => {
+      modalImage.classList.remove('animated', 'fadeOut')
+      modalImage.src = images[currentIndx + val]
+      modalImage.classList.add('animated', 'fadeIn')
+    }, 400)
   }
 }
 
 function closeModal() {
-  modal.style.display = 'none'
+  modal.classList.add('animated', 'fadeOut')
   document.body.style.overflow = ''
+  setTimeout(() => {
+    modal.classList.remove('animated', 'fadeOut')
+    modal.style.display = 'none'
+  }, 500)
 }
 
 function modalToggle(e) {
+  modal.classList.add('animated', 'fadeIn')
   modal.style.display = 'block'
   modalContent.innerHTML = `<img src="${e.target.src}" id="modal-image">`
   document.body.style.overflow = 'hidden'
+  setTimeout(() => modal.classList.remove('animated', 'fadeIn'), 400)
 }
