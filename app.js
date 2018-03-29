@@ -1,6 +1,7 @@
 const flexContainer = document.querySelector('.flex-container'),
   modal = document.querySelector('.my-modal'),
   modalContent = document.querySelector('.my-modal-content')
+  
 
 let images
 
@@ -21,12 +22,13 @@ modal.addEventListener('click', x => x.target.classList.contains('my-modal-conte
 document.addEventListener('keydown', e => {
   if (modal.style.display === 'block') {
     e.keyCode === 27 ? closeModal() : false
-    //left is 37
     e.keyCode === 37 ? prevImg() : false
-    //right is 39
     e.keyCode === 39 ? nextImg() : false
   }
 })
+
+document.getElementById('next').addEventListener('click', nextImg)
+document.getElementById('prev').addEventListener('click', prevImg)
 
 function nextImg() {
   let modalImage = document.getElementById('modal-image')

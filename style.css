@@ -28,7 +28,7 @@ html {
   top: 0;
   position: fixed;
   height: 100vh;
-  width: 100%;  
+  width: 100%;
   display: none;
   background-color: rgba(0, 0, 0, 0.9);
 }
@@ -39,7 +39,34 @@ html {
   justify-content: center;
   height: 100vh;
 }
+
 .my-modal-content img {
   max-height: 95%;
-  max-width: 95%;  
+  max-width: 95%;
+}
+
+#next {
+  position: fixed;
+  top: 50%;
+  right: 5%;
+}
+
+#prev {
+  position: fixed;
+  top: 50%;
+  left: 5%;
+}
+
+#next,
+#prev {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  color: #a8aaaa48;
+  outline: none;
+  border: none;
+}
+
+#next:hover,
+#prev:hover {
+  color: #a8aaaab0;
 }
