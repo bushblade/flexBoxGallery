@@ -22,8 +22,8 @@ document.getElementById('prev').addEventListener('click', () => changeImg(-1))
 document.addEventListener('keydown', e => {
   if (modal.style.display === 'block') {
     e.keyCode === 27 ? closeModal() : false
-    e.keyCode === 37 ? prevImg() : false
-    e.keyCode === 39 ? nextImg() : false
+    e.keyCode === 37 ? changeImg(-1) : false
+    e.keyCode === 39 ? changeImg(+1) : false
   }
 })
 
