@@ -41,7 +41,7 @@ function changeImg(val) {
       modalImage.classList.remove('animated', 'fadeOut')
       modalImage.src = images[currentIndx + val]
       modalImage.classList.add('animated', 'fadeIn')
-    }, 400)
+    }, 500)
   }
 }
 
