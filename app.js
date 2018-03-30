@@ -32,10 +32,22 @@ function changeImg(val) {
   let modalImage = document.getElementById('modal-image')
   let currentIndx = images.indexOf(modalImage.src)
   if (currentIndx === 0 && val === -1) {
-    modalImage.src = images[images.length - 1]
-  } else if (currentIndx === images.length - 1 && val === +1) {
-    modalImage.src = images[0]
-  } else {
+    modalImage.classList.add('animated', 'fadeOut')
+    setTimeout(() => {
+      modalImage.classList.remove('animated', 'fadeOut')
+      modalImage.src = images[images.length - 1]
+      modalImage.classList.add('animated', 'fadeIn')
+    }, 500)
+  }
+  else if (currentIndx === images.length - 1 && val === +1) {
+    modalImage.classList.add('animated', 'fadeOut')
+    setTimeout(() => {
+      modalImage.classList.remove('animated', 'fadeOut')
+      modalImage.src = images[0]
+      modalImage.classList.add('animated', 'fadeIn')
+    }, 500)
+  }
+  else {
     modalImage.classList.add('animated', 'fadeOut')
     setTimeout(() => {
       modalImage.classList.remove('animated', 'fadeOut')
