@@ -12,13 +12,14 @@ const getImages = async url => {
 
 getImages('images.json').then(i => {
   images = i
-  flexContainer.innerHTML = i.reduce((str, x) => str += `<img src="${x}" alt="" />`, '')
+  flexContainer.innerHTML = i.reduce((str, x) => str += `<img src="${x}"/>`, '')
   Array.from(document.querySelectorAll('img')).forEach(x => x.addEventListener('click', modalToggle))
 })
 
 modal.addEventListener('click', x => x.target.classList.contains('my-modal-content') ? closeModal() : false)
 document.getElementById('next').addEventListener('click', () => changeImg(+1))
 document.getElementById('prev').addEventListener('click', () => changeImg(-1))
+document.getElementById('close').addEventListener('click', closeModal)
 document.addEventListener('keydown', e => {
   if (modal.style.display === 'block') {
     e.keyCode === 27 ? closeModal() : false
@@ -47,7 +48,7 @@ const changeImg = val => {
   }
 }
 
-const closeModal = () => {
+function closeModal() {
   modal.classList.add('animated', 'fadeOut')
   document.body.style.overflow = ''
   setTimeout(() => {
@@ -56,7 +57,7 @@ const closeModal = () => {
   }, 500)
 }
 
-const modalToggle = e => {
+function modalToggle(e) {
   modal.classList.add('animated', 'fadeIn')
   modal.style.display = 'block'
   modalContent.innerHTML = `<img src="${e.target.src}" id="modal-image">`
