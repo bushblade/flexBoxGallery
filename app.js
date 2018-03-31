@@ -14,7 +14,7 @@ getImages('images.json').then(i => {
   images = i
   flexContainer.innerHTML = i.reduce((str, x) => str += `<img src="${x}"/>`, '')
   Array.from(document.querySelectorAll('img')).forEach(x => x.addEventListener('click', modalToggle))
-})
+}).catch(err => console.log(err))
 
 modal.addEventListener('click', x => x.target.classList.contains('my-modal-content') ? closeModal() : false)
 document.getElementById('next').addEventListener('click', () => changeImg(+1))
