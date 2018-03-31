@@ -5,14 +5,14 @@ const flexContainer = document.querySelector('.flex-container'),
 let images
 
 const getImages = async url => {
-  const response = await fetch(url)
-  const data = await response.json()
+  const response = await fetch(url),
+    data = await response.json()
   return data
 }
 
 getImages('images.json').then(i => {
   images = i
-  i.forEach(x => flexContainer.innerHTML += `<img src="${x}" alt="" />`)
+  flexContainer.innerHTML = i.reduce((str, x) => str += `<img src="${x}" alt="" />`, '')
   Array.from(document.querySelectorAll('img')).forEach(x => x.addEventListener('click', modalToggle))
 })
 
