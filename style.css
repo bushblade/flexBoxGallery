@@ -1,5 +1,11 @@
 html {
-  background-color: hsl(0, 0%, 29%);
+  background-color: #4a4a4a;
+}
+
+@media (min-width: 1000px) {
+  .container {
+    padding: 0 10%;
+  }
 }
 
 .flex-container {
