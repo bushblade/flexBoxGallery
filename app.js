@@ -4,13 +4,13 @@ const flexContainer = document.querySelector('.flex-container'),
 
 let images
 
-async function getImages() {
-  const response = await fetch('images.json')
+const getImages = async url => {
+  const response = await fetch(url)
   const data = await response.json()
   return data
 }
 
-getImages().then(i => {
+getImages('images.json').then(i => {
   images = i
   i.forEach(x => flexContainer.innerHTML += `<img src="${x}" alt="" />`)
   Array.from(document.querySelectorAll('img')).forEach(x => x.addEventListener('click', modalToggle))
@@ -27,37 +27,27 @@ document.addEventListener('keydown', e => {
   }
 })
 
-
-function changeImg(val) {
-  let modalImage = document.getElementById('modal-image')
-  let currentIndx = images.indexOf(modalImage.src)
+const changeImg = val => {
+  let modalImage = document.getElementById('modal-image'),
+    currentIndx = images.indexOf(modalImage.src)
+  const switchImage = nextImg => {
+    modalImage.classList.add('animated', 'fadeOut')
+    setTimeout(() => {
+      modalImage.classList.remove('animated', 'fadeOut')
+      modalImage.src = nextImg
+      modalImage.classList.add('animated', 'fadeIn')
+    }, 500)
+  }
   if (currentIndx === 0 && val === -1) {
-    modalImage.classList.add('animated', 'fadeOut')
-    setTimeout(() => {
-      modalImage.classList.remove('animated', 'fadeOut')
-      modalImage.src = images[images.length - 1]
-      modalImage.classList.add('animated', 'fadeIn')
-    }, 500)
-  }
-  else if (currentIndx === images.length - 1 && val === +1) {
-    modalImage.classList.add('animated', 'fadeOut')
-    setTimeout(() => {
-      modalImage.classList.remove('animated', 'fadeOut')
-      modalImage.src = images[0]
-      modalImage.classList.add('animated', 'fadeIn')
-    }, 500)
-  }
-  else {
-    modalImage.classList.add('animated', 'fadeOut')
-    setTimeout(() => {
-      modalImage.classList.remove('animated', 'fadeOut')
-      modalImage.src = images[currentIndx + val]
-      modalImage.classList.add('animated', 'fadeIn')
-    }, 500)
+    switchImage(images[images.length - 1])
+  } else if (currentIndx === images.length - 1 && val === +1) {
+    switchImage(images[0])
+  } else {
+    switchImage(images[currentIndx + val])
   }
 }
 
-function closeModal() {
+const closeModal = () => {
   modal.classList.add('animated', 'fadeOut')
   document.body.style.overflow = ''
   setTimeout(() => {
@@ -66,7 +56,7 @@ function closeModal() {
   }, 500)
 }
 
-function modalToggle(e) {
+const modalToggle = e => {
   modal.classList.add('animated', 'fadeIn')
   modal.style.display = 'block'
   modalContent.innerHTML = `<img src="${e.target.src}" id="modal-image">`
