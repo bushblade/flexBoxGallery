@@ -84,6 +84,7 @@ html {
   text-align: center;
   padding-top: 40vh;
   padding-bottom: 40vh;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 #next:hover,
