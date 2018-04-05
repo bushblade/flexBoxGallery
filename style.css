@@ -93,6 +93,12 @@ html {
   color: #a8aaaab0;
 }
 
+#next:focus,
+#prev:focus,
+#close:focus {
+  color: #a8aaaab0;
+}
+
 #close {
   position: fixed;
   top: 0%;

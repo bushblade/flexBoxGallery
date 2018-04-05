@@ -1,7 +1,8 @@
 const flexContainer = document.querySelector('.flex-container'),
   modal = document.querySelector('.my-modal'),
-  modalContent = document.querySelector('.my-modal-content')
-
+  modalContent = document.querySelector('.my-modal-content'),
+  next = document.getElementById('next'),
+  prev = document.getElementById('prev')
 let images
 
 const getImages = async url => {
@@ -17,14 +18,24 @@ getImages('images.json').then(i => {
 }).catch(err => console.log(err))
 
 modal.addEventListener('click', x => x.target.classList.contains('my-modal-content') ? closeModal() : false)
-document.getElementById('next').addEventListener('click', () => changeImg(+1))
-document.getElementById('prev').addEventListener('click', () => changeImg(-1))
+next.addEventListener('click', () => changeImg(+1))
+prev.addEventListener('click', () => changeImg(-1))
 document.getElementById('close').addEventListener('click', closeModal)
 document.addEventListener('keydown', e => {
   if (modal.style.display === 'block') {
-    e.keyCode === 27 ? closeModal() : false
-    e.keyCode === 37 ? changeImg(-1) : false
-    e.keyCode === 39 ? changeImg(+1) : false
+    if (e.keyCode === 27) {
+      closeModal()
+    }
+    else if (e.keyCode === 37) {
+      changeImg(-1)
+      prev.focus()
+      setTimeout(()=> prev.blur(),300)
+    }
+    else if (e.keyCode === 39) {
+      next.focus()
+      changeImg(+1)
+      setTimeout(()=> next.blur(),300)
+    }
   }
 })
 
@@ -41,9 +52,11 @@ const changeImg = val => {
   }
   if (currentIndx === 0 && val === -1) {
     switchImage(images[images.length - 1])
-  } else if (currentIndx === images.length - 1 && val === +1) {
+  }
+  else if (currentIndx === images.length - 1 && val === +1) {
     switchImage(images[0])
-  } else {
+  }
+  else {
     switchImage(images[currentIndx + val])
   }
 }
