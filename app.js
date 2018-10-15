@@ -63,6 +63,7 @@ const changeImg = val => {
     switchImage(images[currentIndx + val])
   }
 }
+
 modal.addEventListener('animationend', () => {
   modal.classList.remove('animated', 'fadeIn', 'fadeOut')
 })
